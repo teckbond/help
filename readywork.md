@@ -29,8 +29,6 @@
 
 所有工具均需要在安装后按照下文所述配置一次，后续直接使用即可。
 
-下边您的GitHub 账号
-
 ### Git 配置
 
 下边以 GitHub 账号teckbond(onlinesales@unisoc.com) 为例，介绍Git 配置流程，主要分为以下几个步骤：
