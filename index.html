@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- 网站标题 -->
+  <title>用户指南编写说明书</title>
+  <!-- 网站icon -->
+  <link rel="icon" href="./favicon.ico">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="keywords" content="用户指南编写说明书">
+  <meta name="description" content="用户指南编写说明书">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <!-- Theme 主题设置 [vue.css] [buble.css] [dark.css] [pure.css]-->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
+  <!--
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/style.min.css"/>
+  -->
+
+</head>
+<body>
+  <!-- loading显示的文字 -->
+  <div id="app">加载中，请稍后……</div>
+
+  <script>
+    window.$docsify = {
+      // ************************* Configuration *************************
+      // https://docsify.js.org/#/zh-cn/configuration
+      name: '首页',
+      maxLevel: 4,
+      subMaxLevel: 4,
+      loadSidebar: true,
+      auto2top: true,
+      autoHeader: true,
+      externalLinkTarget: '_blank',
+      themeColor: '#0D1F8F',
+      formatUpdated: '{YYYY}-{MM}-{DD} {HH}:{mm}:{ss}',
+
+      // 页脚信息插件
+      loadFooter: true,
+      loadFooter: '_footer.md',
+
+      // ************************* Plugins *************************
+      // https://docsify.js.org/#/zh-cn/plugins
+      // 全文搜索 - Search
+      search: {
+          noData: {
+            '/': '没有结果!',
+            '/en/': 'No results!',
+          },
+          paths: 'auto',
+          placeholder: {
+            '/': '搜索',
+            '/en/': 'Search',
+          },
+          pathNamespaces: ['/en']
+        },
+
+        // 字数统计
+        count:{
+            countable:true,
+            language:'chinese'
+        },
+
+        // 翻页
+        pagination: {
+            previousText: '上一篇',
+            nextText: '下一篇',
+            crossChapter: true,
+            crossChapterText: false,
+        },
+
+        flexibleAlerts: {
+            note: {
+                label: "备注"
+            },
+            tip: {
+                label: "提示"
+            },
+            warning: {
+                label: "注意"
+            },
+            attention: {
+                label: "禁止"
+            }
+
+        },
+
+        copyCode: {
+            buttonText: '点击复制',
+            errorText: '错误',
+            successText: '已复制'
+        },
+
+        scrollToTop: {
+            title: '回到顶部',
+            bottom: 75,
+            color: '#0D1F8F'
+        },
+
+        <!-- 最后更新时间 -->
+        plugins: [
+            function(hook, vm) {
+                hook.beforeEach(function(html) {
+                var CONFIG = {
+                repo: 'teckbond/help',
+                basePath: '',
+                preString: '本页最后更新:',
+                dateFormat: '{YYYY}-{MM}-{DD} {HH}:{mm}:{ss}',
+                align: 'right',
+                };
+                var date_url = 'https://api.github.com/repos/' + CONFIG.repo + '/commits?per_page=1';
+                if (CONFIG.basePath !== '') {
+                    date_url = date_url + '&path=' + CONFIG.basePath + vm.route.file;
+                }
+                fetch(date_url).then((response) => {
+                    return response.json();
+                }).then((commits) => {
+                    var time = tinydate(CONFIG.dateFormat)(new Date(commits[0]['commit']['committer']['date']));
+                    if (CONFIG.repo !== '') {
+                        document.getElementById('last-modified').textContent = CONFIG.preString + time;
+                    } else {
+                        document.getElementById('last-modified').textContent = CONFIG.preString + '{docsify-updated}';
+                    }
+                });
+                return (html + '\n----\n' + '<div align= ' + CONFIG.align + '><span id="last-modified"></span></div>');
+                });
+            }
+        ]
+
+    }
+  </script>
+  <!-- Docsify -->
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
+  
+
+  <!-- ************************* Plugins ************************* -->
+  <!-- Plugins：全文搜索 -->
+  <script src="//unpkg.com/docsify/lib/plugins/search.js"></script>
+  <!-- Plugins：图片缩放 - Zoom image -->
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+  
+  <!-- Plugins：字数统计 -->
+  <script src="//unpkg.com/docsify-count/dist/countable.js"></script>
+
+  <!-- Plugins回到顶部功能 -->
+  <script src="//cdn.jsdelivr.net/gh/rxmapple/docsify-scroll-to-top@master/src/docsify-scroll-to-top.js"></script>
+
+  <!-- 页脚信息 -->
+  <script src="//cdn.jsdelivr.net/npm/@alertbox/docsify-footer/dist/docsify-footer.min.js"></script>
+
+  <!-- 翻页 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
+
+
+  <!-- 最后更新时间 -->
+  <script src="//cdn.jsdelivr.net/npm/tinydate@1.3.0/dist/tinydate.min.js"></script>
+
+  <!-- 提醒 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-plugin-flexible-alerts"></script>
+
+  <!-- 代码复制 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
+
+
+</body>
+</html>
